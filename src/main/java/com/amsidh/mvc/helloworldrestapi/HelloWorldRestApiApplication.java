@@ -34,7 +34,7 @@ public class HelloWorldRestApiApplication {
     @GetMapping("/sayHello")
     public String sayHello() {
         log.info("Inside sayHello method of HelloWorldRestApiApplication");
-        return "Application running on pod" + instanceInformationService.retrieveInstanceInfo();
+        return "Application running on pod " + instanceInformationService.retrieveInstanceInfo();
     }
 
     @Bean
@@ -55,6 +55,6 @@ class InstanceInformationService {
 
     public String retrieveInstanceInfo() {
         log.info("Inside retrieveInstanceInfo method of InstanceInformationService");
-        return hostName.substring(hostName.length());
+        return hostName;
     }
 }
