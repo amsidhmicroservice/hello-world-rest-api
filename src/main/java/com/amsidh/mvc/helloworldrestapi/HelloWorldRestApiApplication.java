@@ -34,7 +34,7 @@ public class HelloWorldRestApiApplication {
     @GetMapping("/sayHello")
     public String sayHello() {
         log.info("Inside sayHello method of HelloWorldRestApiApplication");
-        return "Application running on pod " + instanceInformationService.retrieveInstanceInfo();
+        return instanceInformationService.retrieveInstanceInfo();
     }
 
     @Bean
@@ -53,8 +53,11 @@ class InstanceInformationService {
     @Value("${" + HOST_NAME + ":" + DEFAULT_ENV_INSTANCE_GUID + "}")
     private String hostName;
 
+    @Value("${info.app.version:NoVersion}")
+    private String projectVersion;
+
     public String retrieveInstanceInfo() {
         log.info("Inside retrieveInstanceInfo method of InstanceInformationService");
-        return hostName;
+        return "Application running with Project Version " + projectVersion + " and pod name " + hostName;
     }
 }
