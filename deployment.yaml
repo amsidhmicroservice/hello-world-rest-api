@@ -3,10 +3,11 @@ kind: Deployment
 metadata:
   labels:
     app: hello-world-rest-api
+    version: 0.0.1-SNAPSHOT
   name: hello-world-rest-api
   namespace: default
 spec:
-  replicas: 3
+  replicas: 2
   minReadySeconds: 45
   selector:
     matchLabels:
@@ -20,11 +21,12 @@ spec:
     metadata:
       labels:
         app: hello-world-rest-api
+        version: 0.0.1-SNAPSHOT
     spec:
       containers:
-      - image: amsidhmicroservice/hello-world-rest-api:0.0.4-SNAPSHOT
-        imagePullPolicy: Always
-        name: hello-world-rest-api
+        - image: amsidhmicroservice/hello-world-rest-api:0.0.1-SNAPSHOT
+          imagePullPolicy: Always
+          name: hello-world-rest-api
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
 ---
@@ -37,11 +39,9 @@ metadata:
   namespace: default
 spec:
   ports:
-    - nodePort:
+    - name: http
       port: 8080
-      protocol: TCP
-      targetPort: 8080
   selector:
     app: hello-world-rest-api
-  sessionAffinity: None
   type: LoadBalancer
+
