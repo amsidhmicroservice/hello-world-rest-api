@@ -52,6 +52,8 @@ jobs:
     # Deploy sample image to the GKE cluster
     - name: Deploy
       run: |-
+        pwd
+        dir
         kubectl apply -f deployment.yml
         kubectl rollout status deployment/$DEPLOYMENT_NAME
         kubectl get services -o wide
