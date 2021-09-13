@@ -36,7 +36,7 @@ jobs:
 #      - name: Build hello-world-rest-api with Maven
 #        run: mvn -B clean install -P docker-build-push --file pom.xml
       - name: generate sonar report of the currency-service
-          run: mvn sonar:sonar
+        run: mvn sonar:sonar
 
 
 
