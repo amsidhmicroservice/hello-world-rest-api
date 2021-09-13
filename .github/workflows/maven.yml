@@ -16,6 +16,7 @@ env:
   GKE_CLUSTER: cluster-helm   # TODO: update to cluster name
   GKE_ZONE: us-central1-c       # TODO: update to cluster zone
   DEPLOYMENT_NAME: hello-world-rest-api  # TODO: update deployment name if changed in deployment.yaml
+  GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
 
 jobs:
   build:
@@ -32,32 +33,10 @@ jobs:
         with:
           username: ${{secrets.DOCKER_USERNAME}}
           password: ${{secrets.DOCKER_PASSWORD}}
-      - name: Build hello-world-rest-api with Maven
-        run: mvn -B clean install -P docker-build-push --file pom.xml
+#      - name: Build hello-world-rest-api with Maven
+#        run: mvn -B clean install -P docker-build-push --file pom.xml
+      - name: generate sonar report of the currency-service
+          run: mvn sonar:sonar
 
-      # Setup gcloud CLI
-      - uses: google-github-actions/setup-gcloud@master
-        with:
-          service_account_key: ${{ secrets.GKE_SA_KEY }}
-          project_id: ${{ secrets.GKE_PROJECT }}
 
-      # Get the GKE credentials so we can deploy to the cluster
-      - run: |-
-          gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
 
-      # Deploy sample image to the GKE cluster
-      - name: Deploy
-        run: |-
-          kubectl apply -f deployment.yaml
-          kubectl rollout status deployment/$DEPLOYMENT_NAME
-          kubectl get services -o wide
-
-      - name: Official SonarQube Scan
-        # You may pin to the exact commit or the version.
-        # uses: SonarSource/sonarqube-scan-action@069e3332cbefb8659c02d77b21a04719d3ef7c9b
-        uses: SonarSource/sonarqube-scan-action@v1.0.0
-        with:
-          # Additional arguments to the sonar-scanner
-          args: # optional
-          # Set the sonar.projectBaseDir analysis property
-          projectBaseDir: # optional, default is .
