@@ -39,7 +39,7 @@ jobs:
       - name: Docker build and push to repository
         run: mvn -B clean install -P docker-build-push --file pom.xml
 
-      - name: generate sonar report of the currency-service
+      - name: Generate sonar report
         run: mvn sonar:sonar
 
       # Setup gcloud CLI
@@ -57,5 +57,5 @@ jobs:
       - name: Deployment to the GKE Cluster
         run: |-
           kubectl apply -f deployment.yaml
-          kubectl get services $DEPLOYMENT_NAME -o wide
+          kubectl get services -o wide
 
