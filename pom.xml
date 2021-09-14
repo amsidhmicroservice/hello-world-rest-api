@@ -17,7 +17,7 @@
         <java.version>11</java.version>
         <docker.image.prefix>amsidhmicroservice</docker.image.prefix>
         <docker.image.name>${project.artifactId}</docker.image.name>
-        <docker.skip>true</docker.skip>
+        <docker.skip>false</docker.skip>
 
         <!-- Sonar Properties-->
         <sonar.projectBaseDir>.</sonar.projectBaseDir>
