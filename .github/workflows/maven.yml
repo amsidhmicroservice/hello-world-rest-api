@@ -57,5 +57,5 @@ jobs:
       - name: Deployment to the GKE Cluster
         run: |-
           kubectl apply -f deployment.yaml
-          kubectl get services -o wide
+          kubectl get services $DEPLOYMENT_NAME -o wide
 
